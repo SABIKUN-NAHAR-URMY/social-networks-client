@@ -5,9 +5,9 @@ import logo from '../../images/logo.jpg';
 const Navbar = () => {
     const menuItem = 
     <>
-    <Link><li className='mr-5'>Media</li></Link>
-    <Link><li className='mr-5'>Message</li></Link>
-    <Link><li className='mr-5'>About</li></Link>
+    <Link to='/'><li className='mr-5'>Media</li></Link>
+    <Link to='/message'><li className='mr-5'>Message</li></Link>
+    <Link to='/about'><li className='mr-5'>About</li></Link>
     </>
     return (
         <div className="navbar bg-teal-500 text-white sticky">
@@ -20,7 +20,7 @@ const Navbar = () => {
               {menuItem}
             </ul>
           </div>
-          <Link className='text-xl font-bold flex items-center'><img src={logo} className='w-10 rounded-full mr-4' alt="" /> Social <span>Networks</span></Link>
+          <Link to='/' className='text-xl font-bold flex items-center'><img src={logo} className='w-10 rounded-full mr-4' alt="" /> Social <span>Networks</span></Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
@@ -29,8 +29,8 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           <ul className='flex mr-8'>
-          <Link><li className='mr-5'>Login</li></Link>
-          <Link><li>Register</li></Link>
+          <Link to='/login'><li className='mr-5'>Login</li></Link>
+          <Link to='/signup'><li>Signup</li></Link>
           </ul>
         </div>
       </div>
