@@ -7,7 +7,6 @@ import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 
 const Signup = () => {
     // const provider = new GoogleAuthProvider();
-    const [imageProfile, setImageProfile] = useState(null);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const imageHostKey = process.env.REACT_APP_imgbbKey;
     const { createUser, updateUser, googleProvider } = useContext(AuthContext);
@@ -18,7 +17,6 @@ const Signup = () => {
     const from = location.state?.from?.pathname || '/';
 
     const handelSignUp = data => {
-        // console.log(data);
         setSignupError('');
         const image = data.picture[0];
         const formData = new FormData();
@@ -31,8 +29,6 @@ const Signup = () => {
             .then(res => res.json())
             .then(imgData => {
                 const getUrlImg = imgData.data.display_url;
-                // console.log(getUrlImg);
-                // setImageProfile(getUrlImg);
 
                 createUser(data.email, data.password)
                     .then(result => {
@@ -43,7 +39,6 @@ const Signup = () => {
                             displayName: data.name,
                             photoURL: getUrlImg
                         }
-                        // console.log(userInfo);
                         updateUser(userInfo)
                             .then(() => {
                                 saveUser(data.name, data.email, getUrlImg, data.value);

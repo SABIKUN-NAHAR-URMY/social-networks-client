@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { FaUserFriends, FaPenSquare, FaUsers, FaLandmark } from "react-icons/fa";
+import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 
 const Media = () => {
+    const { user } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const imageHostKey = process.env.REACT_APP_imgbbKey;
 
@@ -27,7 +29,7 @@ const Media = () => {
             <div>
                 <div className="card bg-base-100 shadow-xl">
                     <div className="card-body">
-                        <h2 className="card-title mb-7">Card title!</h2>
+                        <h2 className="card-title mb-7">{user?.displayName}</h2>
                         <ul>
                             <Link className="card-title mb-7"><li className='flex items-center'><FaUserFriends className='mr-4'></FaUserFriends>Friends</li></Link>
                             <Link className="card-title mb-7"><li className='flex items-center'><FaPenSquare className='mr-4'></FaPenSquare>All Post</li></Link>
@@ -70,13 +72,13 @@ const Media = () => {
                     <figure className="px-10 pt-10">
                         <div className="avatar online">
                             <div className="w-24 rounded-full">
-                                <img src="https://placeimg.com/192/192/people" />
+                                <img src={user?.photoURL} alt='' />
                             </div>
                         </div>
                     </figure>
                     <div className="card-body items-center text-center">
-                        <h2 className="card-title">Shoes!</h2>
-                        <p>If a dog chews shoes whose shoes does he choose?</p>
+                        <h2 className="card-title">{user?.displayName}</h2>
+                        
                         <div className="card-actions">
                             <button className="btn bg-gradient-to-r from-teal-500 to-teal-300">LogOut</button>
                         </div>
