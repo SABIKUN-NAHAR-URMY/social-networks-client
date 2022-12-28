@@ -5,7 +5,6 @@ import logo from '../../images/logo.jpg';
 const Navbar = () => {
     const menuItem = 
     <>
-    <Link><li className='mr-5'>Home</li></Link>
     <Link><li className='mr-5'>Media</li></Link>
     <Link><li className='mr-5'>Message</li></Link>
     <Link><li className='mr-5'>About</li></Link>
