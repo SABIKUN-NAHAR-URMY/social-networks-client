@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+// import Particles from 'react-tsparticles';
 import { Link } from 'react-router-dom';
 
 const Signup = () => {
@@ -69,12 +70,64 @@ const Signup = () => {
 
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2 lg:m-32 border rounded-lg gap-8'>
+
+            {/* <Particles
+            options={{
+                background: {
+                    color: "#0e387a",
+                },
+                fpsLimit: 60,
+                interactivity: {
+                    detectsOn: "canvas",
+                    events: {
+                        resize: true
+                    },
+
+                },
+                particles: {
+                    color: {
+                        value: "9fafca"
+                    },
+                    number: {
+                        density: {
+                            enable: true,
+                            area: 1080
+                        },
+                        limit: 0,
+                        value: 400,
+                    },
+                    opacity: {
+                        animation: {
+                            enable: true,
+                            minimumValue: 0.05,
+                            speed: 1,
+                            sync: false
+                        },
+                        random: {
+                            enable: true,
+                            minimumValue: 0.05,
+                        },
+                        value: 1
+                    },
+                    shape: {
+                        type: "circle",
+                    },
+                    size: {
+                        random: {
+                            enable: true,
+                            minimumValue: 0.5,
+                        },
+                        value: 1,
+                    },
+                },
+            }}
+            /> */}
  
             <div className='m-32'>
                 <h1 className='text-4xl font-bold'>Make Cool Friends !!!</h1>
-                <p className='mt-10 text-xl font-thin'>Social networks template that can be used to connect people. The template offers Landing pages, News Feed, Image/Video Feed, Chat Box, Timeline and lot more. <br />
+                <p className='mt-10 text-xl font-thin'>Social networks template that can be used to connect people. The template offers Landing pages, News Feed, Image/Video Feed, Chat Box, Timeline and lot more.</p>
 
-                    Why are you waiting for? </p>
+                  <p className='mt-7 text-xl font-thin'> Why are you waiting for? </p>
             </div>
 
             <div className='w-96 pl-12 py-11'>
