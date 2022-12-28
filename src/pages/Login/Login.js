@@ -1,9 +1,42 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
+
+    // const provider = new GoogleAuthProvider();
+    const [loginError, setLoginError] = useState('');
+    const { signIn, googleProvider } = useContext(AuthContext);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from?.pathname || '/';
+
+    const handelLogin = data => {
+        setLoginError('');
+        signIn(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                navigate(from, { replace: true });
+            })
+            .catch(error => {
+                console.error(error);
+                setLoginError(error.message);
+            })
+    }
+
+    // const handelGoogleLogin = ()=>{
+    //     googleProvider(provider)
+    //     .then(result => {
+    //         const user = result.user;
+    //         console.log(user);
+    //         navigate(from, { replace: true });
+    //     })
+    //     .catch(error => console.error(error))
+    // }
+
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2 lg:m-32 border rounded-lg gap-8'>
 
@@ -68,7 +101,7 @@ const Login = () => {
 
             <div className='w-96 pl-12 py-11'>
                 <h2 className='text-4xl font-bold text-center'>Login</h2>
-                <form >
+                <form onSubmit={handleSubmit(handelLogin)}>
                     <div className="form-control w-full">
                         <label className="label"><span className="label-text">Email</span></label>
                         <input type="email"
