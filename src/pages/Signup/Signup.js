@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 // import Particles from 'react-tsparticles';
+// import { TsParticles } from 'react-tsparticles';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 
@@ -12,9 +13,9 @@ const Signup = () => {
     const { createUser, updateUser, googleProvider } = useContext(AuthContext);
     const [signupError, setSignupError] = useState('');
 
-    const location = useLocation();
+    // const location = useLocation();
     const navigate = useNavigate();
-    const from = location.state?.from?.pathname || '/';
+    // const from = location.state?.from?.pathname || '/';
 
     const handelSignUp = data => {
         setSignupError('');
@@ -42,7 +43,6 @@ const Signup = () => {
                         updateUser(userInfo)
                             .then(() => {
                                 saveUser(data.name, data.email, getUrlImg, data.value);
-                                navigate(from, { replace: true });
                             })
                             .catch(error => console.error(error))
                     })
@@ -57,18 +57,18 @@ const Signup = () => {
     const saveUser = (name, email, photoURL, value) => {
         const user = { name, email, photoURL, value };
         console.log(user);
-        // fetch('https://watchbd-server.vercel.app/users', {
-        //     method: 'POST',
-        //     headers: {
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify(user)
-        // })
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         console.log(data);
-        //         navigate(from, { replace: true });
-        //     })
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                navigate('/');
+            })
     }
 
     // const handelGoogleLogin = ()=>{
@@ -91,56 +91,55 @@ const Signup = () => {
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2 lg:m-32 border rounded-lg gap-8'>
 
-            {/* <Particles
-            options={{
-                background: {
-                    color: "#0e387a",
-                },
-                fpsLimit: 60,
-                interactivity: {
-                    detectsOn: "canvas",
-                    events: {
-                        resize: true
+            {/* <TsParticles
+                options={{
+                    background: {
+                        color: '#0e387a',
                     },
-
-                },
-                particles: {
-                    color: {
-                        value: "9fafca"
-                    },
-                    number: {
-                        density: {
-                            enable: true,
-                            area: 1080
+                    fpsLimit: 60,
+                    interactivity: {
+                        detectsOn: 'canvas',
+                        events: {
+                            resize: true,
                         },
-                        limit: 0,
-                        value: 400,
                     },
-                    opacity: {
-                        animation: {
-                            enable: true,
-                            minimumValue: 0.05,
-                            speed: 1,
-                            sync: false
+                    particles: {
+                        color: {
+                            value: '#9fafca',
                         },
-                        random: {
-                            enable: true,
-                            minimumValue: 0.05,
+                        number: {
+                            density: {
+                                enable: true,
+                                area: 1080,
+                            },
+                            limit: 0,
+                            value: 400,
                         },
-                        value: 1
-                    },
-                    shape: {
-                        type: "circle",
-                    },
-                    size: {
-                        random: {
-                            enable: true,
-                            minimumValue: 0.5,
+                        opacity: {
+                            animation: {
+                                enable: true,
+                                minimumValue: 0.05,
+                                speed: 1,
+                                sync: false,
+                            },
+                            random: {
+                                enable: true,
+                                minimumValue: 0.05,
+                            },
+                            value: 1,
                         },
-                        value: 1,
+                        shape: {
+                            type: 'circle',
+                        },
+                        size: {
+                            random: {
+                                enable: true,
+                                minimumValue: 0.5,
+                            },
+                            value: 1,
+                        },
                     },
-                },
-            }}
+                }}
             /> */}
 
             <div className='m-32'>

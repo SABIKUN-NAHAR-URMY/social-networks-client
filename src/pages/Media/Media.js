@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaUserFriends, FaPenSquare, FaUsers, FaLandmark } from "react-icons/fa";
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import userImg from '../../images/user.jpg';
@@ -9,6 +9,7 @@ const Media = () => {
     const { user, logOut } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const imageHostKey = process.env.REACT_APP_imgbbKey;
+    const navigate = useNavigate();
 
     const handelAddProduct = data => {
         console.log(data);
@@ -29,13 +30,15 @@ const Media = () => {
 
     const handelLogOut = () => {
         logOut()
-            .then(() => { })
+            .then(() => { 
+                navigate('/login');
+            })
             .catch(err => console.error(err))
     }
 
     return (
-        <div className='grid grid-cols-1 lg:grid-cols-4 gap-5'>
-            <div>
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-5'>
+            {/* <div>
                 <div className="card bg-base-100 shadow-xl">
                     <div className="card-body">
                         <h2 className="card-title mb-7">{user?.displayName}</h2>
@@ -47,9 +50,9 @@ const Media = () => {
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
-            <div className='col-span-2'>
+            <div className='col-span-2 m-5 mt-14 lg:mt-0'>
                 <div className='mt-10 border border-teal-500 rounded-2xl'>
                     <div className="card bg-base-100 shadow-xl">
                         <div className="card-body">
@@ -66,7 +69,7 @@ const Media = () => {
                                         <textarea {...register("postText")} className="textarea textarea-bordered w-full" placeholder="What's on your mind?"></textarea>
                                         <input type="file"
                                             {...register("picture")} className="input input-bordered w-full" />
-                                        <input type="submit" value="Post" className="btn bg-gradient-to-r from-teal-500 to-teal-200 input-bordered w-full" />
+                                        <input type="submit" value="Post" className="btn bg-gradient-to-r from-teal-700 to-teal-400 input-bordered w-full" />
 
                                     </form>
                                 </div>
@@ -76,11 +79,8 @@ const Media = () => {
                 </div>
             </div>
 
-            <div>
+            <div className='mb-5 mt-5 hidden lg:block'>
                 <div className="card bg-base-100 shadow-xl">
-
-                    {
-                        user?.uid ?
                             <figure className="px-10 pt-10">
                                 <div className="avatar online">
                                     <div className="w-24 rounded-full">
@@ -88,22 +88,12 @@ const Media = () => {
                                     </div>
                                 </div>
                             </figure>
-                            :
-                            <figure className="px-10 pt-10">
-                                <div className="avatar offline">
-                                    <div className="w-24 rounded-full">
-                                        <img src={userImg} alt=''/>
-                                    </div>
-                                </div>
-                            </figure>
-
-                    }
 
                     <div className="card-body items-center text-center">
                         <h2 className="card-title">{user?.displayName}</h2>
 
                         <div className="card-actions">
-                            <button onClick={handelLogOut} className="btn bg-gradient-to-r from-teal-500 to-teal-300">LogOut</button>
+                            <button onClick={handelLogOut} className="btn border-none bg-gradient-to-r from-teal-700 to-teal-400">LogOut</button>
                         </div>
                     </div>
                 </div>
