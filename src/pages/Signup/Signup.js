@@ -188,7 +188,7 @@ const Signup = () => {
                             <option value="Male">Male</option>
                         </select>
                     </div>
-                    <input className='btn w-full mt-5 bg-gradient-to-r from-teal-500 to-teal-300' value='Signup' type="submit" />
+                    <input className='btn w-full mt-5 bg-gradient-to-r from-teal-700 to-teal-400' value='Signup' type="submit" />
                     {
                         signupError && <p className='text-red-600'>{signupError}</p>
                     }

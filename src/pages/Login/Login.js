@@ -120,7 +120,7 @@ const Login = () => {
                                 })} className="input input-bordered w-full" />
                         {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                     </div>
-                    <input className='btn w-full mt-5 bg-gradient-to-r from-teal-500 to-teal-300' value='Login' type="submit" />
+                    <input className='btn w-full mt-5 bg-gradient-to-r from-teal-700 to-teal-400' value='Login' type="submit" />
                     {
                         loginError && <p className='text-red-600'>{loginError}</p>
                     }

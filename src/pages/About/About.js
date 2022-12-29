@@ -22,21 +22,21 @@ const About = () => {
     const handelEditAbout = aboutData => {
         console.log(aboutData);
 
-        fetch(`http://localhost:5000/users/${user?.email}`, {
-            method: 'PATCH',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(aboutData)
-        })
-            .then(data => {
-                console.log(data);
-                if (data.modifiedCount > 0) {
-                    toast("About me Updated!");
-                }
-                navigate('/about');
-            })
-            .catch(error => console.error(error))
+        // fetch(`http://localhost:5000/users/${user?.email}`, {
+        //     method: 'PATCH',
+        //     headers: {
+        //         'content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify(aboutData)
+        // })
+        //     .then(data => {
+        //         console.log(data);
+        //         if (data.modifiedCount > 0) {
+        //             toast("About me Updated!");
+        //         }
+        //         navigate('/about');
+        //     })
+        //     .catch(error => console.error(error))
 
     }
 

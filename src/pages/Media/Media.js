@@ -1,23 +1,27 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import { FaUserFriends, FaPenSquare, FaUsers, FaLandmark, FaWindows, FaRegHeart } from "react-icons/fa";
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import userImg from '../../images/user.jpg';
 import { toast } from 'react-hot-toast';
+import Loading from '../Loading/Loading';
 
 const Media = () => {
-    const { user, logOut } = useContext(AuthContext);
-    const[posts, setPosts] = useState([]);
+    const { user, logOut, loading } = useContext(AuthContext);
+    const getData = useLoaderData();
+    const [posts, setPosts] = useState([]);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const imageHostKey = process.env.REACT_APP_imgbbKey;
     const navigate = useNavigate();
 
-    useEffect(()=>{
+    console.log(getData);
+
+    useEffect(() => {
         fetch('http://localhost:5000/posts')
-        .then(res => res.json())
-        .then(data => setPosts(data))
-    },[])
+            .then(res => res.json())
+            .then(data => setPosts(data))
+    }, [])
 
     const handelAddPost = data => {
         console.log(data);
@@ -59,6 +63,38 @@ const Media = () => {
             })
     }
 
+    const handelReactionComment = (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const rating = form.rating.value;
+        const comment = form.comment.value;
+
+        const commentWrite = {
+            post: getData._id,
+            comment,
+            rating,
+            commenter: user?.displayName,
+            email: user?.email,
+            commenterImage: user?.photoURL,
+        }
+
+        fetch('http://localhost:5000/comment', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(commentWrite)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                form.reset();
+                toast("Review added!");
+                // setUpdate(true);
+            })
+            .catch(error => console.error(error))
+    }
+
 
     const handelLogOut = () => {
         logOut()
@@ -67,6 +103,10 @@ const Media = () => {
             })
             .catch(err => console.error(err))
     }
+
+   if(loading){
+    return <Loading></Loading>
+   }
 
     return (
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-5'>
@@ -111,15 +151,31 @@ const Media = () => {
                 </div>
 
                 {
-                    posts.map(post => <div className="mt-10 border border-teal-500 rounded-2xl">
-                    <figure><img className='w-full' src={post.picture} alt="" /></figure>
-                    <div className="card-body">
-                        <p>{post.postText}</p>
-                        <div className="card-actions justify-end">
-                            <button className="btn btn-primary"><FaRegHeart></FaRegHeart></button>
+                    posts.map(post => <div key={post._id}>
+                        <div className="mt-10 border border-teal-500 rounded-2xl">
+                            <figure><img className='w-full' src={post.picture} alt="" /></figure>
+                            <div className="card-body">
+                                <p>{post.postText}</p>
+                    
+                                <div className="card-actions ">
+
+
+
+                                <form onSubmit={handelReactionComment} className='m-10 flex w-full'>
+                                        <textarea name='comment' className="textarea textarea-bordered w-full h-5 mr-4" placeholder="Write Comment"></textarea>
+                                        <input type="number" name='rating' placeholder='Rating' className="input input-bordered w-full mr-4" />
+
+                                        <input className='btn bg-gradient-to-r from-teal-700 to-teal-400' type="submit" value="Submit Comment" />
+                                    </form>
+
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>)
+                        <h1 className='text-xl font-semibold'>Comments</h1>
+                        <div className="mt-4 border border-teal-500 rounded-2xl">
+
+                        </div>
+                    </div>)
                 }
             </div>
 
