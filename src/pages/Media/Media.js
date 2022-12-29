@@ -181,13 +181,26 @@ const Media = () => {
 
             <div className='mb-5 mt-5 hidden lg:block'>
                 <div className="card bg-base-100 shadow-xl">
-                    <figure className="px-10 pt-10">
+
+
+                    {
+                        user?.uid ?
+                        <figure className="px-10 pt-10">
                         <div className="avatar online">
                             <div className="w-24 rounded-full">
                                 <img src={user?.photoURL} alt='' />
                             </div>
                         </div>
                     </figure>
+                    :
+                    <figure className="px-10 pt-10">
+                        <div className="avatar offline">
+                            <div className="w-24 rounded-full">
+                                <img src={userImg} alt='' />
+                            </div>
+                        </div>
+                    </figure>
+                    }
 
                     <div className="card-body items-center text-center">
                         <h2 className="card-title">{user?.displayName}</h2>
