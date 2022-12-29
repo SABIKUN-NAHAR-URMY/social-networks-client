@@ -121,9 +121,9 @@ const Login = () => {
                         {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                     </div>
                     <input className='btn w-full mt-5 bg-gradient-to-r from-teal-500 to-teal-300' value='Login' type="submit" />
-                    {/* {
-                        signupError && <p className='text-red-600'>{signupError}</p>
-                    } */}
+                    {
+                        loginError && <p className='text-red-600'>{loginError}</p>
+                    }
                 </form>
                 <p className='text-sm text-center'>New to SocialNetworks? <Link className='text-teal-500' to='/signup'>Create New Account</Link></p>
                 <div className="divider">OR</div>

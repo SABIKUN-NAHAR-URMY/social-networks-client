@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { FaUserFriends, FaPenSquare, FaUsers, FaLandmark } from "react-icons/fa";
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
+import userImg from '../../images/user.jpg';
 
 const Media = () => {
-    const { user } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const imageHostKey = process.env.REACT_APP_imgbbKey;
 
@@ -24,6 +25,14 @@ const Media = () => {
                 console.log(imgData.data.url);
             })
     }
+
+
+    const handelLogOut = () => {
+        logOut()
+            .then(() => { })
+            .catch(err => console.error(err))
+    }
+
     return (
         <div className='grid grid-cols-1 lg:grid-cols-4 gap-5'>
             <div>
@@ -69,18 +78,32 @@ const Media = () => {
 
             <div>
                 <div className="card bg-base-100 shadow-xl">
-                    <figure className="px-10 pt-10">
-                        <div className="avatar online">
-                            <div className="w-24 rounded-full">
-                                <img src={user?.photoURL} alt='' />
-                            </div>
-                        </div>
-                    </figure>
+
+                    {
+                        user?.uid ?
+                            <figure className="px-10 pt-10">
+                                <div className="avatar online">
+                                    <div className="w-24 rounded-full">
+                                        <img src={user?.photoURL} alt='' />
+                                    </div>
+                                </div>
+                            </figure>
+                            :
+                            <figure className="px-10 pt-10">
+                                <div className="avatar offline">
+                                    <div className="w-24 rounded-full">
+                                        <img src={userImg} alt=''/>
+                                    </div>
+                                </div>
+                            </figure>
+
+                    }
+
                     <div className="card-body items-center text-center">
                         <h2 className="card-title">{user?.displayName}</h2>
-                        
+
                         <div className="card-actions">
-                            <button className="btn bg-gradient-to-r from-teal-500 to-teal-300">LogOut</button>
+                            <button onClick={handelLogOut} className="btn bg-gradient-to-r from-teal-500 to-teal-300">LogOut</button>
                         </div>
                     </div>
                 </div>

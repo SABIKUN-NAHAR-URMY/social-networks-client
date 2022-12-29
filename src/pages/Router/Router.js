@@ -3,6 +3,7 @@ import Media from '../Media/Media';
 import Main from "../Main/Main";
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
+import About from "../About/About";
 
 export const router = createBrowserRouter([
     {
@@ -12,6 +13,10 @@ export const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Media></Media>
+            },
+            {
+                path: '/about',
+                element: <About></About>
             },
             {
                 path: '/login',
