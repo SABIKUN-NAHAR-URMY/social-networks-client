@@ -205,9 +205,14 @@ const Media = () => {
                     <div className="card-body items-center text-center">
                         <h2 className="card-title">{user?.displayName}</h2>
 
-                        <div className="card-actions">
+                        {
+                            user?.uid ?
+                            <div className="card-actions">
                             <button onClick={handelLogOut} className="btn border-none bg-gradient-to-r from-teal-700 to-teal-400">LogOut</button>
                         </div>
+                        :
+                        <></>
+                        }
                     </div>
                 </div>
             </div>
