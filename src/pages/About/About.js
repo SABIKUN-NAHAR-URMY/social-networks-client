@@ -13,17 +13,17 @@ const About = () => {
     const navigate = useNavigate();
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    useEffect(()=>{
-        fetch(`http://localhost:5000/users/${user?.email}`)
-        .then(res => res.json())
-        .then(data => setGetEmailData(data))
-    },[user?.email])
+    // useEffect(()=>{
+    //     fetch(`http://localhost:5000/users/${user?.email}`)
+    //     .then(res => res.json())
+    //     .then(data => setGetEmailData(data))
+    // },[user?.email])
 
     const handelEditAbout = aboutData => {
         console.log(aboutData);
 
         fetch(`http://localhost:5000/users/${user?.email}`, {
-            method: 'PUT',
+            method: 'PATCH',
             headers: {
                 'content-type': 'application/json'
             },
@@ -31,7 +31,9 @@ const About = () => {
         })
             .then(data => {
                 console.log(data);
-                toast("About me Updated!");
+                if (data.modifiedCount > 0) {
+                    toast("About me Updated!");
+                }
                 navigate('/about');
             })
             .catch(error => console.error(error))
@@ -63,7 +65,7 @@ const About = () => {
                         <div className="modal-box relative  border-4 border-teal-500">
                             <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                             <form onSubmit={handleSubmit(handelEditAbout)} className='grid grid-cols-1 gap-3'>
-                                <textarea {...register("aboutMe")} className="textarea textarea-bordered w-full" placeholder='aboutMe'></textarea>
+                                <textarea {...register("bio")} className="textarea textarea-bordered w-full" placeholder='bio'></textarea>
                                 <input type="text"
                                     {...register("name")} className="input input-bordered w-full" placeholder='name' />
                                 <input type="email"

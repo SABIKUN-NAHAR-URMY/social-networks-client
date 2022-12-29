@@ -1,17 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaUserFriends, FaPenSquare, FaUsers, FaLandmark } from "react-icons/fa";
+import { FaUserFriends, FaPenSquare, FaUsers, FaLandmark, FaWindows, FaRegHeart } from "react-icons/fa";
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import userImg from '../../images/user.jpg';
+import { toast } from 'react-hot-toast';
 
 const Media = () => {
     const { user, logOut } = useContext(AuthContext);
+    const[posts, setPosts] = useState([]);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const imageHostKey = process.env.REACT_APP_imgbbKey;
     const navigate = useNavigate();
 
-    const handelAddProduct = data => {
+    useEffect(()=>{
+        fetch('http://localhost:5000/posts')
+        .then(res => res.json())
+        .then(data => setPosts(data))
+    },[])
+
+    const handelAddPost = data => {
         console.log(data);
         const image = data.picture[0];
         const formData = new FormData();
@@ -24,13 +32,37 @@ const Media = () => {
             .then(res => res.json())
             .then(imgData => {
                 console.log(imgData.data.url);
+                if (imgData.success) {
+                    const post = {
+                        picture: imgData.data.url,
+                        postText: data.postText,
+                        userName: user?.displayName,
+                        photoURL: user?.photoURL
+                    }
+
+                    fetch('http://localhost:5000/posts', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json',
+                        },
+                        body: JSON.stringify(post)
+                    })
+                        .then(res => res.json())
+                        .then(result => {
+                            console.log(result);
+                            if (result.acknowledged) {
+                                toast.success('Posted successfully');
+                                window.location.reload();
+                            }
+                        })
+                }
             })
     }
 
 
     const handelLogOut = () => {
         logOut()
-            .then(() => { 
+            .then(() => {
                 navigate('/login');
             })
             .catch(err => console.error(err))
@@ -65,7 +97,7 @@ const Media = () => {
                             <div className="modal">
                                 <div className="modal-box relative  border-4 border-teal-500">
                                     <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                                    <form onSubmit={handleSubmit(handelAddProduct)} className='grid grid-cols-1 gap-3'>
+                                    <form onSubmit={handleSubmit(handelAddPost)} className='grid grid-cols-1 gap-3'>
                                         <textarea {...register("postText")} className="textarea textarea-bordered w-full" placeholder="What's on your mind?"></textarea>
                                         <input type="file"
                                             {...register("picture")} className="input input-bordered w-full" />
@@ -77,17 +109,29 @@ const Media = () => {
                         </div>
                     </div>
                 </div>
+
+                {
+                    posts.map(post => <div className="mt-10 border border-teal-500 rounded-2xl">
+                    <figure><img className='w-full' src={post.picture} alt="" /></figure>
+                    <div className="card-body">
+                        <p>{post.postText}</p>
+                        <div className="card-actions justify-end">
+                            <button className="btn btn-primary"><FaRegHeart></FaRegHeart></button>
+                        </div>
+                    </div>
+                </div>)
+                }
             </div>
 
             <div className='mb-5 mt-5 hidden lg:block'>
                 <div className="card bg-base-100 shadow-xl">
-                            <figure className="px-10 pt-10">
-                                <div className="avatar online">
-                                    <div className="w-24 rounded-full">
-                                        <img src={user?.photoURL} alt='' />
-                                    </div>
-                                </div>
-                            </figure>
+                    <figure className="px-10 pt-10">
+                        <div className="avatar online">
+                            <div className="w-24 rounded-full">
+                                <img src={user?.photoURL} alt='' />
+                            </div>
+                        </div>
+                    </figure>
 
                     <div className="card-body items-center text-center">
                         <h2 className="card-title">{user?.displayName}</h2>
