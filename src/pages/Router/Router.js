@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
             {
                 path:'/posts/:id',
                 element: <Media></Media>,
-                loader: ({params}) => fetch(`http://localhost:5000/posts/${params.id}`)
+                loader: ({params}) => fetch(`https://social-networks-server.vercel.app/posts/${params.id}`)
             },
 
             {
