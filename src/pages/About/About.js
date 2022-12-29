@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
-import { FaUserEdit } from "react-icons/fa";
+import { FaUserEdit, FaInfoCircle, FaRegAddressCard, FaEnvelope, FaUniversity, FaBriefcase, FaRegHeart, FaLanguage } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 
 const About = () => {
@@ -28,25 +28,25 @@ const About = () => {
                 </div>
 
                 <div className='mx-16'>
-                    <h1 className='text-2xl font-semibold mb-4'>Personal Information: </h1>
+                    <h1 className='text-2xl font-semibold mb-4 flex items-center'><FaInfoCircle className='mr-4'></FaInfoCircle>Personal Information: </h1>
                     <p className='mb-4'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur</p>
 
-                    <h1 className='text-2xl font-semibold mb-4'>Email: </h1>
+                    <h1 className='text-2xl font-semibold mb-4 flex items-center'><FaEnvelope className='mr-4'></FaEnvelope>Email: </h1>
                     <p className='mb-4'>socialnetworks@gmail.com</p>
 
-                    <h1 className='text-2xl font-semibold mb-4'>University: </h1>
+                    <h1 className='text-2xl font-semibold mb-4 flex items-center'><FaUniversity className='mr-4'></FaUniversity>University: </h1>
                     <p className='mb-4'>socialnetworks@gmail.com</p>
 
-                    <h1 className='text-2xl font-semibold mb-4'>Address: </h1>
+                    <h1 className='text-2xl font-semibold mb-4 flex items-center'><FaRegAddressCard className='mr-4'></FaRegAddressCard>Address: </h1>
                     <p className='mb-4'>socialnetworks@gmail.com</p>
 
-                    <h1 className='text-2xl font-semibold mb-4'>Work Experiences: </h1>
+                    <h1 className='text-2xl font-semibold mb-4 flex items-center'><FaBriefcase className='mr-4'></FaBriefcase>Work Experiences: </h1>
                     <p className='mb-4'>socialnetworks@gmail.com</p>
 
-                    <h1 className='text-2xl font-semibold mb-4'>Interests: </h1>
+                    <h1 className='text-2xl font-semibold mb-4 flex items-center'><FaRegHeart className='mr-4'></FaRegHeart>Interests: </h1>
                     <p className='mb-4'>socialnetworks@gmail.com</p>
 
-                    <h1 className='text-2xl font-semibold mb-4'>Language: </h1>
+                    <h1 className='text-2xl font-semibold mb-4 flex items-center'><FaLanguage className='mr-4'></FaLanguage>Language: </h1>
                     <p className='mb-4'>Bengali, English</p>
                 </div>
             </div>
