@@ -5,6 +5,7 @@ import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
 import About from "../About/About";
 import Message from "../Message/Message";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -13,7 +14,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <Media></Media>
+                element: <PrivateRoute><Media></Media></PrivateRoute>
             },
             {
                 path: '/about',
