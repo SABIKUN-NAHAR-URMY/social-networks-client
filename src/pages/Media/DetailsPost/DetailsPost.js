@@ -35,7 +35,7 @@ const DetailsPost = () => {
             commenterImage: user?.photoURL,
         }
 
-        fetch('http://localhost:5000/comment', {
+        fetch('https://social-networks-server.vercel.app/comment', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -53,7 +53,7 @@ const DetailsPost = () => {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:5000/comments/queryPost?postId=${data?._id}`)
+        fetch(`https://social-networks-server.vercel.app/comments/queryPost?postId=${data?._id}`)
             .then(res => res.json())
             .then(data => {
                 setComments(data);

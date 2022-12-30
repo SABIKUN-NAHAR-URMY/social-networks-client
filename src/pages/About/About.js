@@ -21,7 +21,7 @@ const About = () => {
     console.log(users);
 
     useEffect(()=>{
-        fetch(`http://localhost:5000/users/queryEmail?email=${user?.email}`)
+        fetch(`https://social-networks-server.vercel.app/users/queryEmail?email=${user?.email}`)
         .then(res => res.json())
         .then(data => setUsers(data))
     },[user?.email])
@@ -29,7 +29,7 @@ const About = () => {
     const handelEditAbout = aboutData => {
         console.log(aboutData);
 
-        fetch(`http://localhost:5000/users/${user?.email}`, {
+        fetch(`https://social-networks-server.vercel.app/users/${user?.email}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json'

@@ -16,7 +16,7 @@ const Media = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://localhost:5000/posts')
+        fetch('https://social-networks-server.vercel.app/posts')
             .then(res => res.json())
             .then(data => setPosts(data))
     }, [])
@@ -42,7 +42,7 @@ const Media = () => {
                         photoURL: user?.photoURL
                     }
 
-                    fetch('http://localhost:5000/posts', {
+                    fetch('https://social-networks-server.vercel.app/posts', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',
