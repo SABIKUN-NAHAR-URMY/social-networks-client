@@ -14,7 +14,7 @@ const About = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
 
     // useEffect(()=>{
-    //     fetch(`https://social-networks-server.vercel.app/users/${user?.email}`)
+    //     fetch(`http://localhost:5000/users/${user?.email}`)
     //     .then(res => res.json())
     //     .then(data => setGetEmailData(data))
     // },[user?.email])
@@ -22,21 +22,21 @@ const About = () => {
     const handelEditAbout = aboutData => {
         console.log(aboutData);
 
-        // fetch(`https://social-networks-server.vercel.app/users/${user?.email}`, {
-        //     method: 'PATCH',
-        //     headers: {
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify(aboutData)
-        // })
-        //     .then(data => {
-        //         console.log(data);
-        //         if (data.modifiedCount > 0) {
-        //             toast("About me Updated!");
-        //         }
-        //         navigate('/about');
-        //     })
-        //     .catch(error => console.error(error))
+        fetch(`http://localhost:5000/users/${user?.email}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(aboutData)
+        })
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount > 0) {
+                    toast("About me Updated!");
+                }
+                navigate('/about');
+            })
+            .catch(error => console.error(error))
 
     }
 

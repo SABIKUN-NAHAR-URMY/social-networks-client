@@ -6,6 +6,7 @@ import Signup from "../Signup/Signup";
 import About from "../About/About";
 import Message from "../Message/Message";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import DetailsPost from "../Media/DetailsPost/DetailsPost";
 
 export const router = createBrowserRouter([
     {
@@ -22,9 +23,9 @@ export const router = createBrowserRouter([
             },
 
             {
-                path:'/posts/:id',
-                element: <Media></Media>,
-                loader: ({params}) => fetch(`https://social-networks-server.vercel.app/posts/${params.id}`)
+                path:'/details/:id',
+                element: <DetailsPost></DetailsPost>,
+                loader: ({params}) => fetch(`http://localhost:5000/details/${params.id}`)
             },
 
             {

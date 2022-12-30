@@ -57,7 +57,7 @@ const Signup = () => {
     const saveUser = (name, email, photoURL, value) => {
         const user = { name, email, photoURL, value };
         console.log(user);
-        fetch('https://social-networks-server.vercel.app/users', {
+        fetch('http://localhost:5000/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

@@ -9,16 +9,14 @@ import Loading from '../Loading/Loading';
 
 const Media = () => {
     const { user, logOut, loading } = useContext(AuthContext);
-    const getData = useLoaderData();
     const [posts, setPosts] = useState([]);
+
     const { register, formState: { errors }, handleSubmit } = useForm();
     const imageHostKey = process.env.REACT_APP_imgbbKey;
     const navigate = useNavigate();
 
-    console.log(getData);
-
     useEffect(() => {
-        fetch('https://social-networks-server.vercel.app/posts')
+        fetch('http://localhost:5000/posts')
             .then(res => res.json())
             .then(data => setPosts(data))
     }, [])
@@ -44,7 +42,7 @@ const Media = () => {
                         photoURL: user?.photoURL
                     }
 
-                    fetch('https://social-networks-server.vercel.app/posts', {
+                    fetch('http://localhost:5000/posts', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',
@@ -63,39 +61,6 @@ const Media = () => {
             })
     }
 
-    const handelReactionComment = (event) => {
-        event.preventDefault();
-        const form = event.target;
-        const rating = form.rating.value;
-        const comment = form.comment.value;
-
-        const commentWrite = {
-            post: getData._id,
-            comment,
-            rating,
-            commenter: user?.displayName,
-            email: user?.email,
-            commenterImage: user?.photoURL,
-        }
-
-        fetch('https://social-networks-server.vercel.app/comment', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(commentWrite)
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                form.reset();
-                toast("Review added!");
-                // setUpdate(true);
-            })
-            .catch(error => console.error(error))
-    }
-
-
     const handelLogOut = () => {
         logOut()
             .then(() => {
@@ -104,9 +69,9 @@ const Media = () => {
             .catch(err => console.error(err))
     }
 
-   if(loading){
-    return <Loading></Loading>
-   }
+    if (loading) {
+        return <Loading></Loading>
+    }
 
     return (
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-5'>
@@ -156,24 +121,13 @@ const Media = () => {
                             <figure><img className='w-full' src={post.picture} alt="" /></figure>
                             <div className="card-body">
                                 <p>{post.postText}</p>
-                    
-                                <div className="card-actions ">
 
+                                <div className="card-actions justify-end">
 
-
-                                <form onSubmit={handelReactionComment} className='m-10 flex w-full'>
-                                        <textarea name='comment' className="textarea textarea-bordered w-full h-5 mr-4" placeholder="Write Comment"></textarea>
-                                        <input type="number" name='rating' placeholder='Rating' className="input input-bordered w-full mr-4" />
-
-                                        <input className='btn bg-gradient-to-r from-teal-700 to-teal-400' type="submit" value="Submit Comment" />
-                                    </form>
+                                    <Link to={`/details/${post._id}`}><button className="btn border-none bg-gradient-to-r from-teal-700 to-teal-400">Details</button></Link>
 
                                 </div>
                             </div>
-                        </div>
-                        <h1 className='text-xl font-semibold'>Comments</h1>
-                        <div className="mt-4 border border-teal-500 rounded-2xl">
-
                         </div>
                     </div>)
                 }
@@ -182,24 +136,23 @@ const Media = () => {
             <div className='mb-5 mt-5 hidden lg:block'>
                 <div className="card bg-base-100 shadow-xl">
 
-
                     {
                         user?.uid ?
-                        <figure className="px-10 pt-10">
-                        <div className="avatar online">
-                            <div className="w-24 rounded-full">
-                                <img src={user?.photoURL} alt='' />
-                            </div>
-                        </div>
-                    </figure>
-                    :
-                    <figure className="px-10 pt-10">
-                        <div className="avatar offline">
-                            <div className="w-24 rounded-full">
-                                <img src={userImg} alt='' />
-                            </div>
-                        </div>
-                    </figure>
+                            <figure className="px-10 pt-10">
+                                <div className="avatar online">
+                                    <div className="w-24 rounded-full">
+                                        <img src={user?.photoURL} alt='' />
+                                    </div>
+                                </div>
+                            </figure>
+                            :
+                            <figure className="px-10 pt-10">
+                                <div className="avatar offline">
+                                    <div className="w-24 rounded-full">
+                                        <img src={userImg} alt='' />
+                                    </div>
+                                </div>
+                            </figure>
                     }
 
                     <div className="card-body items-center text-center">
@@ -207,11 +160,11 @@ const Media = () => {
 
                         {
                             user?.uid ?
-                            <div className="card-actions">
-                            <button onClick={handelLogOut} className="btn border-none bg-gradient-to-r from-teal-700 to-teal-400">LogOut</button>
-                        </div>
-                        :
-                        <></>
+                                <div className="card-actions">
+                                    <button onClick={handelLogOut} className="btn border-none bg-gradient-to-r from-teal-700 to-teal-400">LogOut</button>
+                                </div>
+                                :
+                                <></>
                         }
                     </div>
                 </div>
