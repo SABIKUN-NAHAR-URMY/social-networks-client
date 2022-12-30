@@ -5,19 +5,26 @@ import { useForm } from 'react-hook-form';
 import coverImg from '../../images/flower.jpg';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../Loading/Loading';
 
 const About = () => {
-    const { user } = useContext(AuthContext);
-    // const [editData, setEditData] = useState([]);
-    const [getEmailData, setGetEmailData] = useState([]);
+    const { user, loading } = useContext(AuthContext);
+
+    // const [update, setUpdate] = useState(false);
+
+    // const [comments, setComments] = useState([]);
+
+    const [users, setUsers] = useState([]);
     const navigate = useNavigate();
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    // useEffect(()=>{
-    //     fetch(`http://localhost:5000/users/${user?.email}`)
-    //     .then(res => res.json())
-    //     .then(data => setGetEmailData(data))
-    // },[user?.email])
+    console.log(users);
+
+    useEffect(()=>{
+        fetch(`http://localhost:5000/users/queryEmail?email=${user?.email}`)
+        .then(res => res.json())
+        .then(data => setUsers(data))
+    },[user?.email])
 
     const handelEditAbout = aboutData => {
         console.log(aboutData);
@@ -31,13 +38,18 @@ const About = () => {
         })
             .then(data => {
                 console.log(data);
-                if (data.modifiedCount > 0) {
+                if (data.statusText === "OK") {
                     toast("About me Updated!");
+                    window.location.reload();
                 }
-                navigate('/about');
+
             })
             .catch(error => console.error(error))
 
+    }
+
+    if(loading){
+        return <Loading></Loading>
     }
 
 
@@ -54,8 +66,7 @@ const About = () => {
                         </div>
                     </div>
                 </div>
-                <p className='mt-20 text-3xl font-bold mx-16'>{user?.displayName}</p>
-                <p className='text-lg font-thin mx-16'>{user?.displayName}</p>
+                <p className='mt-20 text-3xl font-bold mx-16'>{users[0]?.name}</p>
 
                 <div className='text-end mr-16'>
                     <label htmlFor="my-modal-3" className="btn border-none bg-gradient-to-r from-teal-700 to-teal-400 font-bold">Edit Profile <FaUserEdit className='ml-4'></FaUserEdit></label>
@@ -93,26 +104,26 @@ const About = () => {
                 </div>
 
                 <div className='mx-16'>
-                    <h1 className='text-2xl font-semibold mb-4 flex items-center'><FaInfoCircle className='mr-4'></FaInfoCircle>About Me: </h1>
-                    <p className='mb-4'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur</p>
+                    <h1 className='text-2xl font-semibold mb-4 flex items-center'><FaInfoCircle className='mr-4'></FaInfoCircle>Bio: </h1>
+                    <p className='mb-4'>{users[0]?.bio ? users[0]?.bio : <>Please edit profile.</>}</p>
 
                     <h1 className='text-2xl font-semibold mb-4 flex items-center'><FaEnvelope className='mr-4'></FaEnvelope>Email: </h1>
-                    <p className='mb-4'>socialnetworks@gmail.com</p>
+                    <p className='mb-4'>{users[0]?.email ? users[0]?.email : <>Please edit profile.</>}</p>
 
                     <h1 className='text-2xl font-semibold mb-4 flex items-center'><FaUniversity className='mr-4'></FaUniversity>University: </h1>
-                    <p className='mb-4'>socialnetworks@gmail.com</p>
+                    <p className='mb-4'>{users[0]?.university ? users[0]?.university: <>Please edit profile.</>}</p>
 
                     <h1 className='text-2xl font-semibold mb-4 flex items-center'><FaRegAddressCard className='mr-4'></FaRegAddressCard>Address: </h1>
-                    <p className='mb-4'>socialnetworks@gmail.com</p>
+                    <p className='mb-4'>{users[0]?.address ? users[0]?.address: <>Please edit profile.</>}</p>
 
                     <h1 className='text-2xl font-semibold mb-4 flex items-center'><FaBriefcase className='mr-4'></FaBriefcase>Work Experiences: </h1>
-                    <p className='mb-4'>socialnetworks@gmail.com</p>
+                    <p className='mb-4'>{users[0]?.workExp ? users[0]?.workExp: <>Please edit profile.</>}</p>
 
                     <h1 className='text-2xl font-semibold mb-4 flex items-center'><FaRegHeart className='mr-4'></FaRegHeart>Interests: </h1>
-                    <p className='mb-4'>socialnetworks@gmail.com</p>
+                    <p className='mb-4'>{users[0]?.interests ? users[0]?.interests : <>Please edit profile.</>}</p>
 
                     <h1 className='text-2xl font-semibold mb-4 flex items-center'><FaLanguage className='mr-4'></FaLanguage>Language: </h1>
-                    <p className='mb-4'>Bengali, English</p>
+                    <p className='mb-4'>{users[0]?.languages ? users[0]?.languages : <>Please edit profile.</>}</p>
                 </div>
             </div>
 
