@@ -1,3 +1,4 @@
+import { GoogleAuthProvider } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
@@ -7,7 +8,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 
 const Signup = () => {
-    // const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider();
     const { register, formState: { errors }, handleSubmit } = useForm();
     const imageHostKey = process.env.REACT_APP_imgbbKey;
     const { createUser, updateUser, googleProvider } = useContext(AuthContext);
@@ -71,22 +72,23 @@ const Signup = () => {
             })
     }
 
-    // const handelGoogleLogin = ()=>{
-    //     const value = 'Buyer';
-    //     googleProvider(provider)
-    //     .then(result => {
-    //         const user = result.user;
-    //         console.log(user);
-    //         saveUser(user?.displayName, user?.email, value);
-    //         if(user?.acknowledged === true){
-    //             toast.success('Create user successfully');
-    //         }
-    //         else{
-    //             toast.success('Already User Created');
-    //         }
-    //     })
-    //     .catch(error => console.error(error))
-    // }
+    const handelGoogleLogin = ()=>{
+        const value = 'female/male';
+        googleProvider(provider)
+        .then(result => {
+            const user = result.user;
+            console.log(user);
+            saveUser(user?.displayName, user?.email, user?.photoURL, value);
+            if(user?.acknowledged === true){
+                toast.success('Create user successfully');
+                window.location.reload();
+            }
+            // else{
+            //     toast.success('Already User Created');
+            // }
+        })
+        .catch(error => console.error(error))
+    }
 
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2 lg:m-32 border rounded-lg gap-8'>
@@ -195,7 +197,7 @@ const Signup = () => {
                 </form>
                 <p className='text-sm text-center'>Already have an account? <Link className='text-teal-500' to='/login'>Please Login</Link></p>
                 <div className="divider">OR</div>
-                <button className='btn btn-outline w-full hover:bg-teal-400 hover:text-white'>
+                <button onClick={handelGoogleLogin} className='btn btn-outline w-full hover:bg-teal-400 hover:text-white'>
                     CONTINUE WITH GOOGLE</button>
             </div>
         </div>

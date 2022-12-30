@@ -1,3 +1,4 @@
+import { GoogleAuthProvider } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -6,7 +7,7 @@ import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    // const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider();
     const [loginError, setLoginError] = useState('');
     const { signIn, googleProvider } = useContext(AuthContext);
     const location = useLocation();
@@ -27,15 +28,15 @@ const Login = () => {
             })
     }
 
-    // const handelGoogleLogin = ()=>{
-    //     googleProvider(provider)
-    //     .then(result => {
-    //         const user = result.user;
-    //         console.log(user);
-    //         navigate(from, { replace: true });
-    //     })
-    //     .catch(error => console.error(error))
-    // }
+    const handelGoogleLogin = ()=>{
+        googleProvider(provider)
+        .then(result => {
+            const user = result.user;
+            console.log(user);
+            navigate(from, { replace: true });
+        })
+        .catch(error => console.error(error))
+    }
 
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2 lg:m-32 border rounded-lg gap-8'>
@@ -127,7 +128,7 @@ const Login = () => {
                 </form>
                 <p className='text-sm text-center'>New to SocialNetworks? <Link className='text-teal-500' to='/signup'>Create New Account</Link></p>
                 <div className="divider">OR</div>
-                <button className='btn btn-outline w-full hover:bg-teal-400 hover:text-white'>
+                <button onClick={handelGoogleLogin} className='btn btn-outline w-full hover:bg-teal-400 hover:text-white'>
                     CONTINUE WITH GOOGLE</button>
             </div>
         </div>
