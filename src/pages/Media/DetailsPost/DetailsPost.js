@@ -6,10 +6,11 @@ import { AuthContext } from '../../../Contexts/AuthProvider/AuthProvider';
 const DetailsPost = () => {
     const { user } = useContext(AuthContext);
     const data = useLoaderData();
+    console.log(data);
 
     const [update, setUpdate] = useState(false);
 
-    const [reviews, setReviews] = useState([]);
+    const [comments, setComments] = useState([]);
     const [redirect, setRedirect] = useState(false);
 
     let location = useLocation();
@@ -42,18 +43,18 @@ const DetailsPost = () => {
                 console.log(data);
                 form.reset();
                 toast("Comment added!");
-                // setUpdate(true);
+                setUpdate(true);
             })
             .catch(error => console.error(error))
     }
 
-    // useEffect(() => {
-    //     fetch(`https://lens-queen-server.vercel.app/reviews/queryService?serviceName=${data?.name}`)
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             setReviews(data);
-    //         })
-    // }, [data?.name, update]);
+    useEffect(() => {
+        fetch(`http://localhost:5000/comments/queryPost?postId=${data?._id}`)
+            .then(res => res.json())
+            .then(data => {
+                setComments(data);
+            })
+    }, [data?._id, update]);
 
     return (
         <div className='grid md:grid-cols-2 gap-6'>
@@ -69,7 +70,7 @@ const DetailsPost = () => {
 
                                 <div className="card-actions ">
 
-                                    <form onSubmit={handelReactionComment} className='m-10 flex w-full'>
+                                    <form onSubmit={handelReactionComment} className='m-10 block lg:flex w-full'>
                                         <textarea name='comment' className="textarea textarea-bordered w-full h-5 mr-4" placeholder="Write Comment"></textarea>
                                         <input type="number" name='rating' placeholder='Rating' className="input input-bordered w-full mr-4" />
 
@@ -79,32 +80,31 @@ const DetailsPost = () => {
                                 </div>
                             </div>
                         </div>
-                        <h1 className='text-xl font-semibold'>Comments</h1>
-                        <div className="mt-4 border border-teal-500 rounded-2xl">
-
-                        </div>
+                       
                     </div>
 
-            {/* <div className='border-2 rounded-xl'>
+            <div className='mt-10 border-2  border-teal-500 rounded-2xl'>
+            <h1 className='text-3xl font-semibold m-10'>Comments</h1>
                 {
-                    reviews.map(review => {
+                    comments.map(comment => {
                         return (
-                            <div key={review._id}>
-                                <div className="m-5 card bg-base-100 shadow-xl">
-                                    <div className="card-body">
-                                        <h2 className="card-title">ServiceName: {review.serviceName}</h2>
-                                        <h2>Review: {review.review}</h2>
-                                        <h2>Rating: {review.rating}</h2>
-                                        <h2>Reviewer: {review.reviewer}</h2>
-                                        <h2>Date and Time: {review.dateAndTime}</h2>
-                                        <img className='w-24 rounded' src={review.reviewerImage} alt="" />
+                            <div key={comment._id}>
+                                <div className="m-5 p-4 card bg-base-100 shadow-xl">
+                                    <div className="block lg:flex justify-between items-center">
+                                        
+                                        <h2>Comment: {comment.comment}</h2>
+                                        <h2>Rating: {comment.rating}</h2>
+                                        <div className='flex items-center'>
+                                        <img className='w-12 h-12 rounded-full' src={comment.commenterImage} alt="" />
+                                        <h2> {comment.commenter}</h2>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         )
                     })
                 }
-            </div> */}
+            </div>
         </div>
     );
 };
