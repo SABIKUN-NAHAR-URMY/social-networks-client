@@ -72,6 +72,11 @@ const DetailsPost = () => {
                             <div className="card-body">
                                 <p>{data.postText}</p>
 
+                               <div className='flex items-center'>
+                               <img src={data?.photoURL} className='w-16 h-16 rounded-full mr-3' alt="" />
+                                    <p className='font-thin'>Posted By: {data?.userName}</p>
+                               </div>
+
                                 <div className="card-actions ">
 
                                     <form onSubmit={handelReactionComment} className='m-10 block lg:flex w-full'>

@@ -122,8 +122,9 @@ const Media = () => {
                             <div className="card-body">
                                 <p>{post.postText}</p>
 
-                                <div className="card-actions justify-end">
-
+                                <div className="card-actions justify-end items-center">
+                                    <img src={post?.photoURL} className='w-16 h-16 rounded-full' alt="" />
+                                    <p className='font-thin'>Posted By: {post?.userName}</p>
                                     <Link to={`/details/${post._id}`}><button className="btn border-none bg-gradient-to-r from-teal-700 to-teal-400">Details</button></Link>
 
                                 </div>
