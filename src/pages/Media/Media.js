@@ -39,7 +39,8 @@ const Media = () => {
                         picture: imgData.data.url,
                         postText: data.postText,
                         userName: user?.displayName,
-                        photoURL: user?.photoURL
+                        photoURL: user?.photoURL,
+                        reactCount: 0
                     }
 
                     fetch('https://social-networks-server.vercel.app/posts', {

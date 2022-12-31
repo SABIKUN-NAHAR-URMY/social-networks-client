@@ -38,11 +38,8 @@ const About = () => {
         })
             .then(data => {
                 console.log(data);
-                if (data.statusText === "OK") {
                     toast("About me Updated!");
                     window.location.reload();
-                }
-
             })
             .catch(error => console.error(error))
 
@@ -96,7 +93,7 @@ const About = () => {
                                 <input type="text"
                                     {...register("languages")} className="input input-bordered w-full" placeholder='languages' />
 
-                                <input type="submit" value="Save Changes" className="btn bg-gradient-to-r from-teal-700 to-teal-400 input-bordered w-full" />
+                                <input type="submit" htmlFor="my-modal-3" value="Save Changes" className="btn bg-gradient-to-r from-teal-700 to-teal-400 input-bordered w-full" />
 
                             </form>
                         </div>
